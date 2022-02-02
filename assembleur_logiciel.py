@@ -49,7 +49,7 @@ for i in data:
 
     elif inst == "braz":
         instr += dictionnaire_inst.get(inst) << 27
-        instr += int(splitage_tableau[0].rsplit["r", 1]) << 22
+        instr += int(splitage_tableau[0].rsplit("r", 1)[1]) << 22
     
     elif inst == "stop":
         instr += dictionnaire_inst.get(inst) << 27
