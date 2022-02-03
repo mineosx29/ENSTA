@@ -10,6 +10,7 @@ dictionnaire_inst = {}
 
 for n in range(0, len(instruction_assembleur)):
     dictionnaire_inst[instruction_assembleur[n]] = n + 1
+# add = 1, sub = 2, mul = 3, div = 4...
 
 for i in data:
     tableau = []
