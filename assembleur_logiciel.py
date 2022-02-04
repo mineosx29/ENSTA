@@ -7,6 +7,8 @@ data = fichier_asm.readlines()
 instruction_assembleur = ["add", "sub", "mul", "div", "and", "or", "xor", "shl", "seq", "load", "store", "braz", "branz", "jmp", "stop"]
 
 dictionnaire_inst = {}
+donne_sortie = []
+dictionnaire_de_labels = {}
 
 for n in range(0, len(instruction_assembleur)):
     dictionnaire_inst[instruction_assembleur[n]] = n + 1
@@ -14,6 +16,9 @@ for n in range(0, len(instruction_assembleur)):
 
 for i in data:
     tableau = []
+    br = 0
+    
+
 
     for p in i:
         if p == "#":
@@ -30,6 +35,8 @@ for i in data:
     if tableau_virgule == '':
         continue
 
+    
+
     splitage_tableau = tableau_virgule.split(",")
     if splitage_tableau[0] == "jmp":
         inst = "jmp"
@@ -41,6 +48,11 @@ for i in data:
     if splitage_tableau[0] != "jmp":
         inst = splitage_tableau[0].rsplit("r", 1)[0]
         print(inst)
+
+    if splitage_tableau == ":" :
+        dictionnaire_de_labels[splitage_tableau[0][-1]] = br
+    elif splitage_tableau != ":":
+        br += 1
 
     instr = 0
 
@@ -58,6 +70,10 @@ for i in data:
 
     print(splitage_tableau)
 
+    donne_sortie.append(instr)
+
+for m in donne_sortie:
+    print(hex(m))
 
 
     

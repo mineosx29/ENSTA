@@ -13,7 +13,8 @@ label1:
         seq   r7, 18,r9
         load  r4 , 5,r6
 
-label2: store r7, 18,r9
+label2: 
+        store r7, 18,r9
         braz  r0, label1
         branz r2, label2
         sub   r3,-42,r3
