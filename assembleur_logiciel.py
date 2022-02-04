@@ -17,6 +17,7 @@ for n in range(0, len(instruction_assembleur)):
 for i in data:
     tableau = []
     br = 0
+    part_nombre_reg = []
     
 
 
@@ -59,6 +60,19 @@ for i in data:
     if inst == "branz":
         instr += dictionnaire_inst.get(inst) << 27
         instr += int(splitage_tableau[0].rsplit("r", 1)[1]) << 22
+
+    elif inst == "jmp":
+        if splitage_tableau[0].rsplit("p")[1] == "r":
+            cmd = 1
+            part_nombre_reg.append(int(splitage_tableau[0].rsplit("p")[1][1:]))
+
+        else:
+            cmd = 0
+            part_nombre_reg.append(int(splitage_tableau[0].rsplit("p")[1]))
+
+        part_nombre_reg.append(int(splitage_tableau[0].rsplit("p")[1][1:]))
+            
+
 
     elif inst == "braz":
         instr += dictionnaire_inst.get(inst) << 27
