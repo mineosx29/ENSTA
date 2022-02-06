@@ -7,7 +7,7 @@ label1:
         mul   r7,  8,r9 # multiplier c'est mieux
         div   r1 ,r2,r3
         and   r4 , 5,r6
-         or   r7, 18,r9
+        or   r7, 18,r9
         xor   r1 ,r2,r3
         shl   r4 , 5,r6
         seq   r7, 18,r9

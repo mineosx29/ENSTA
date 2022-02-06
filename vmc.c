@@ -12,6 +12,7 @@ int pc = 0;
 int fetch()
 {
   return program[ pc++ ];
+  // Boucle permettant de lire le fichier en sortie d'assemblage
 }
 
 /* instruction fields */
