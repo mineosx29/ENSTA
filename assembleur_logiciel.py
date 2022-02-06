@@ -11,26 +11,32 @@ dictionnaire_inst = {}
 donne_sortie = []
 dictionnaire_de_labels = {}
 
-for n in range(0, len(instruction_assembleur)):
+
+for n in range(0, 15):
     dictionnaire_inst[instruction_assembleur[n]] = n + 1
 # add = 1, sub = 2, mul = 3, div = 4...
+
+
 
 for i in data:
     tableau = []
     part_nombre_reg = []
     register = []
     
+    
 
 
     for p in i:
-        if p == "#":
-            break
-        elif p == "\n":
-            break
-        elif p == " ":
-            continue
-        else:
+        try:
+            if p == "#":
+                break
+            if p == " ":
+                continue
+            elif p == "\n":
+                break
             tableau.append(p)
+        except ValueError:
+            print("Erreur lors du traitement")
 
     tableau_virgule = "".join(tableau)
 
@@ -125,8 +131,12 @@ for i in data:
 
     donne_sortie.append(instr)
 
+
+fichier_a_decoder = open(sys.argv[2], "a")
 for m in donne_sortie:
-    print(hex(m))
+    fichier_a_decoder.write(hex(m))
+    fichier_a_decoder.write("\n")
+fichier_a_decoder.close()
 
 
     
