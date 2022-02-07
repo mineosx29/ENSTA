@@ -23,6 +23,15 @@ int reg3     = 0;
 int imm      = 0;
 
 /* decode a word */
+void lire_fichier(char* fichier)
+{
+  char* lecture;
+
+  FILE *fichier_read = fopen(fichier, "r");
+  fscanf(fichier_read, "%s\n", &lecture);
+  fclose(fichier_read);
+
+}
 void decode( int instr )
 {
   instrNum = (instr & 0xF8000000) >> 27;
@@ -68,6 +77,106 @@ void eval()
         regs[ reg3 ] = regs[ reg1 ] + regs[ reg2 ];
       }
       break;
+    case 3:
+      if(imm)
+      {
+        printf("mul r%d,r%d,r%d\n", reg1, reg2, reg3);
+        regs[ reg3] = regs[reg1] * reg2;
+      }
+      else{
+        printf("mul r%d,r%d,r%d\n", reg1, reg2, reg3);
+        regs[ reg3] = regs[reg1] * regs[reg2];
+      }
+      break;
+    case 4:
+      if(imm)
+      {
+        printf("div r%d,r%d;r%d\n", reg1, reg2, reg3);
+        regs[ reg3] = regs[reg1] / reg2;
+
+      }
+      else
+      {
+        printf("div r%d, r%d,r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] /regs[reg2];
+      }
+      break;
+    case 5:
+      if(imm)
+      {
+        printf("and r%d, r%d, r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] & reg2;
+      }
+      else
+      {
+        printf("and r%d, r%d, r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] & regs[reg2];
+      }
+      break;
+    case 6:
+      if(imm)
+      {
+        printf("or r%d, r%d;,r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] || reg2;
+      }
+      else
+      {
+        printf("or r%d, r%d,r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] || regs[reg2];
+      }
+      break;
+    case 7:
+      if(imm)
+      {
+        printf("xor r%d, r%d, r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] ^ reg2;
+      }
+      else
+      {
+        printf("xor r%d, r%d, r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] ^ regs[reg2];
+      }
+      break;
+    case 8:
+      if(imm)
+      {
+        printf("shl r%d, r%d; r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] >> reg2;
+      }
+      else
+      {
+        printf("shl r%d, r%d; r%d\n", reg1, reg2, reg3);
+        regs[reg3] = regs[reg1] >> regs[reg2];
+      }
+      break;
+    case 9:
+      if(imm)
+      {
+        printf("seq r%d, r%d, r%d\n", reg1, reg2, reg3);
+        if(regs[reg1] == reg2)
+        {
+          regs[reg3] = 1;
+        }
+        else
+        {
+           regs[reg3] = 0;
+
+        }
+      }
+      else
+      {
+        printf("seq r%d, r%d, r%d\n", reg1, reg2, reg3);
+        if(regs[reg1] == regs[reg2])
+        {
+          regs[reg3] = 1;
+        }
+        else
+        {
+           regs[reg3] = 0;
+
+        }
+      }
+      break;
   }
 }
 
@@ -92,6 +201,8 @@ void run()
   }
   showRegs();
 }
+
+
 
 int main( int argc, const char * argv[] )
 {
