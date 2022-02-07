@@ -3,7 +3,7 @@
 # define NUM_REGS 32
 int regs[ NUM_REGS ];
 
-int program[] = { 0x82000e1, 0x10600043, 0x19c00109};
+int program[] = { 0x08600043, 0x110000a6, 0x19e00109};
 
 /* program counter */
 int pc = 0;
@@ -80,7 +80,7 @@ void eval()
     case 3:
       if(imm)
       {
-        printf("mul r%d,r%d,r%d\n", reg1, reg2, reg3);
+        printf("mul r%d,%d,r%d\n", reg1, reg2, reg3);
         regs[ reg3] = regs[reg1] * reg2;
       }
       else{
@@ -91,7 +91,7 @@ void eval()
     case 4:
       if(imm)
       {
-        printf("div r%d,r%d;r%d\n", reg1, reg2, reg3);
+        printf("div r%d,%d;r%d\n", reg1, reg2, reg3);
         regs[ reg3] = regs[reg1] / reg2;
 
       }
@@ -104,7 +104,7 @@ void eval()
     case 5:
       if(imm)
       {
-        printf("and r%d, r%d, r%d\n", reg1, reg2, reg3);
+        printf("and r%d, %d, r%d\n", reg1, reg2, reg3);
         regs[reg3] = regs[reg1] & reg2;
       }
       else
@@ -116,7 +116,7 @@ void eval()
     case 6:
       if(imm)
       {
-        printf("or r%d, r%d;,r%d\n", reg1, reg2, reg3);
+        printf("or r%d, %d;,r%d\n", reg1, reg2, reg3);
         regs[reg3] = regs[reg1] || reg2;
       }
       else
@@ -128,7 +128,7 @@ void eval()
     case 7:
       if(imm)
       {
-        printf("xor r%d, r%d, r%d\n", reg1, reg2, reg3);
+        printf("xor r%d, %d, r%d\n", reg1, reg2, reg3);
         regs[reg3] = regs[reg1] ^ reg2;
       }
       else
@@ -140,7 +140,7 @@ void eval()
     case 8:
       if(imm)
       {
-        printf("shl r%d, r%d; r%d\n", reg1, reg2, reg3);
+        printf("shl r%d, %d; r%d\n", reg1, reg2, reg3);
         regs[reg3] = regs[reg1] >> reg2;
       }
       else
@@ -152,7 +152,7 @@ void eval()
     case 9:
       if(imm)
       {
-        printf("seq r%d, r%d, r%d\n", reg1, reg2, reg3);
+        printf("seq r%d, %d, r%d\n", reg1, reg2, reg3);
         if(regs[reg1] == reg2)
         {
           regs[reg3] = 1;
@@ -177,6 +177,22 @@ void eval()
         }
       }
       break;
+      case 10:
+
+        if(imm)
+        {
+          printf("seq r%d, r%d, r%d\n", reg1, reg2, reg3);
+          int *op = regs[reg1] + reg2;
+          regs[reg3] = &op;
+          
+        }
+        else
+        {
+          printf("seq r%d, r%d, r%d\n", reg1, reg2, reg3);
+          int *op = regs[reg1] + regs[reg2];
+          regs[reg3] = &op;
+        }
+
   }
 }
 
