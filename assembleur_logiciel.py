@@ -4,16 +4,21 @@ import sys
 fichier_asm = open(sys.argv[1], "r")
 data = fichier_asm.readlines()
 br = 0
+addresse = 0
 
-instruction_assembleur = ["add", "sub", "mul", "div", "and", "or", "xor", "shl", "seq", "load", "store", "braz", "branz", "jmp", "stop"]
+instruction_assembleur = [ "add", "sub", "mul", "div", "and",
+                    "or", "xor", "shl", "shr", "slt", 
+                    "sle", "seq", "load", "store", "jmp", 
+                    "braz", "branz", "scall", "stop"    ]
 
 dictionnaire_inst = {}
 donne_sortie = []
 dictionnaire_de_labels = {}
 
 
-for n in range(0, 15):
+for n in range(0, 19):
     dictionnaire_inst[instruction_assembleur[n]] = n + 1
+print(len(dictionnaire_inst))
 # add = 1, sub = 2, mul = 3, div = 4...
 
 
@@ -46,14 +51,14 @@ for i in data:
     print(tableau_virgule)
 
     splitage_tableau = tableau_virgule.split(",") # On sépare en fonction des virgules
-    if splitage_tableau[0] == "jmp": # Si le premier instruction est jmp
+    if "jmp" in splitage_tableau[0]: # Si le premier instruction est jmp
         inst = "jmp"
-        if splitage_tableau[0] == "jmpr":
+        if "jmpr" in splitage_tableau[0]:
             imm = 0
         else:
             imm = 1
-    
-    if splitage_tableau[0] != "jmp":
+    else:
+    # if splitage_tableau[0] != "jmp":
         inst = splitage_tableau[0].rsplit("r", 1)[0]
         print(inst)
 
@@ -65,21 +70,21 @@ for i in data:
 
     instr = 0
 
-    if inst == "branz":
+    if inst == "stop":
+        instr += dictionnaire_inst.get(inst) << 27
+
+    elif inst == "branz":
         instr += dictionnaire_inst.get(inst) << 27
         instr += int(splitage_tableau[0].rsplit("r", 1)[1]) << 22
-        print(splitage_tableau[1])
         instr += int(dictionnaire_de_labels.get(splitage_tableau[1]))
 
     elif inst == "jmp":
         if "r" in splitage_tableau[0].split("p")[1]:
-            imm = 0
             part_nombre_reg.append(int(splitage_tableau[0].split("p")[1][1:]))
-
+            imm = 0
         else:
-            imm = 1
             part_nombre_reg.append(int(splitage_tableau[0].split("p")[1]))
-
+            imm = 1
         part_nombre_reg.append(int(splitage_tableau[1][1:]))
 
         instr += dictionnaire_inst.get(inst) << 27
@@ -91,13 +96,10 @@ for i in data:
     elif inst == "braz":
         instr += dictionnaire_inst.get(inst) << 27
         instr += int(splitage_tableau[0].rsplit("r", 1)[1]) << 22
-        print(dictionnaire_de_labels.get(splitage_tableau[1]))
         instr += int(dictionnaire_de_labels.get(splitage_tableau[1]))
 
 
-    elif inst == "stop":
-        instr += dictionnaire_inst.get(inst) << 27
-    
+  
     elif inst == "scall":
         pass
 
@@ -134,7 +136,7 @@ for i in data:
 
 fichier_a_decoder = open(sys.argv[2], "a")
 for m in donne_sortie:
-    fichier_a_decoder.write(hex(m))
+    fichier_a_decoder.write("0x%08x" % addresse + " " + hex(m))
     fichier_a_decoder.write("\n")
 fichier_a_decoder.close()
 
@@ -145,3 +147,5 @@ print(tableau)
 
 
     
+
+
