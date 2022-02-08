@@ -65,6 +65,7 @@ for i in data:
     if ":" in tableau_virgule:
         dictionnaire_de_labels[splitage_tableau[0][:-1]] = br
         continue
+        
     else:
         br += 1
 
@@ -102,6 +103,8 @@ for i in data:
   
     elif inst == "scall":
         pass
+
+    
 
     
     else:
