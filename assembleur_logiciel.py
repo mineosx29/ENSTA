@@ -9,7 +9,7 @@ addresse = 0
 instruction_assembleur = [ "add", "sub", "mul", "div", "and",
                     "or", "xor", "shl", "shr", "slt", 
                     "sle", "seq", "load", "store", "jmp", 
-                    "braz", "branz", "scall", "stop"    ]
+                    "braz", "branz", "scall", "stop"    ] #Dictionnaire instruction
 
 dictionnaire_inst = {}
 donne_sortie = []
