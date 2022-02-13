@@ -1,6 +1,9 @@
 
 
 
+from dis import Instruction
+
+
 class Virtual_Machine:
     def __init__(self, nombre_registre = 32):
         self.regs = [0 for _ in range(nombre_registre)]
@@ -10,6 +13,7 @@ class Virtual_Machine:
         self.reg2 = None
         self.reg3 = None
         self.imm = None
+        self.memory = []
         self.running = False
 
     def fetch(self):
@@ -19,10 +23,20 @@ class Virtual_Machine:
 
     def decode(self, instr):
         instrNum = (instr &  0xF8000000) >> 27
-        self.reg1 = (instr & 0x7C00000) >> 22
-        self.reg2 = (instr & 0xFE0) >> 5
-        self.reg3 = (instr & 0x1F)
-        self.imm = (instr & 0x200000) >> 21
+        if instrNum == 15:
+            self.imm = (instr & 0x4000000) >> 26
+            self.reg1 = (instr & 0x3FFFFE0) >> 5
+            self.reg2 = (instr & 0x1F)
+        elif instrNum == 16 or instrNum == 17:
+            self.reg1 = (instr & 0x7C00000) >> 22
+            self.reg2 = (instr & 0x3FFFFF)
+        elif instrNum == 18:
+            self.reg1 = (instr & 0x7FFFFFF)
+        else:
+            self.reg1 = (instr & 0x7C00000) >> 22
+            self.imm = (instr & 0x200000) >> 21
+            self.reg2 = (instr & 0x1FFFE0) >> 5
+            self.reg3 = (instr & 0x1F)
         return instrNum
 
     def codage_inst(self, instrNum):
@@ -30,7 +44,7 @@ class Virtual_Machine:
             self.running = False
         elif (instrNum == 1):
             if (self.imm):
-                print(f"add r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"add r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.regs[self.reg1] + self.reg2
@@ -39,7 +53,7 @@ class Virtual_Machine:
                 self.regs[self.reg3] = self.regs[self.reg1] + self.regs[self.reg2]
         elif (instrNum == 2):
             if(self.imm):
-                print(f"sub r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"sub r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.regs[self.reg1] - self.reg2
@@ -57,7 +71,7 @@ class Virtual_Machine:
                 self.regs[self.reg3] = self.regs[self.reg1] * self.regs[self.reg2]
         elif (instrNum == 4):
             if(self.imm):
-                print(f"div r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"div r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.regs[self.reg1] / self.reg2
@@ -117,6 +131,37 @@ class Virtual_Machine:
                     self.regs[self.reg3] = 1
                 else:
                     self.regs[self.reg3] = 0
-                    
+        elif (instrNum == 10):
+            if(self.imm):
+                print(f"load r{self.reg1} {self.reg2} r{self.reg3}")
+                if (self.reg2 < 0):
+                    self.reg2 = self.reg2 & (2**16) -1
+                self.regs[self.reg3] = self.memory[self.regs[self.reg1] + self.reg2]
+            else:
+                print(f"load r{self.reg1} {self.reg2} r{self.reg3}")
+                self.regs[self.reg3] = self.memory[self.regs[self.reg1] + self.regs[self.reg2]]
 
+
+    def showRegs(self):
+        res = "regs = "
+        for i in range(len(self.regs)):
+            res += " " + str(hex(self.regs[i]))[2:].zfill(4)
+        print(res)
+
+    def run(self, prog, show_regs=True):
+        self.prog = prog
+        self.running = True
+        while self.running:
+            instruction = self.fetch()
+            instrNum = self.decode(instruction)
+            self.codage_inst(instrNum)
+            if show_regs:
+                self.showRegs()
+        self.prog = None
+
+if __name__ == "__main__":
+
+    prog = [0x8600043, 0x110000a6, 0x19c00109, 0x20600043]
+    vm = Virtual_Machine(nombre_registre=32)
+    vm.run(prog)
 
