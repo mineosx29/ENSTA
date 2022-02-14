@@ -23,9 +23,9 @@ for i in donnee:
     print(registre)
 
     if "R" in liste[1]:
-        reg2 = 0
-    else:
         reg2 = 1
+    else:
+        reg2 = 0
 
     instruc = 0
     instruc +=  dico.get(instruction2[0]) << 27

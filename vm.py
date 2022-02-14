@@ -47,75 +47,81 @@ class Virtual_Machine:
                 print(f"add r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] + self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] + self.regs[self.reg2]
             else:
                 print(f"add r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] + self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] + self.reg2
         elif (instrNum == 2):
             if(self.imm):
                 print(f"sub r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] - self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] - self.regs[self.reg2]
             else:
                 print(f"sub r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] - self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] - self.reg2
         elif (instrNum == 3):
             if(self.imm):
                 print(f"mul r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] * self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] * self.regs[self.reg2]
             else:
                 print(f"mul r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] * self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] * self.reg2
         elif (instrNum == 4):
             if(self.imm):
                 print(f"div r{self.reg1} r{self.reg2} r{self.reg3}")
+                self.regs[self.reg3] = self.regs[self.reg1] / self.regs[self.reg2]
+            else:
+                print(f"div r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.regs[self.reg1] / self.reg2
-            else:
-                print(f"div r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] / self.regs[self.reg2]
         elif (instrNum == 5):
             if(self.imm):
-                print(f"and r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"and r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] & self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] & self.regs[self.reg2]
             else:
                 print(f"and r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] & self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] & self.reg2
         elif (instrNum == 6):
             if(self.imm):
-                print(f"or r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"or r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] | self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] | self.regs[self.reg2]
             else:
                 print(f"or r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] | self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] | self.reg2
         elif (instrNum == 7):
             if(self.imm):
-                print(f"xor r{self.reg1} {self.reg2} r{self.reg3}")
+                print(f"xor r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
-                self.regs[self.reg3] = self.regs[self.reg1] ^ self.reg2
+                self.regs[self.reg3] = self.regs[self.reg1] ^ self.regs[self.reg2]
             else:
                 print(f"xor r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] ^ self.regs[self.reg2]
+                self.regs[self.reg3] = self.regs[self.reg1] ^ self.reg2
         elif (instrNum == 8):
             if(self.imm):
+                print(f"shl r{self.reg1} r{self.reg2} r{self.reg3}")
+                self.regs[self.reg3] = self.regs[self.reg1] >> self.regs[self.reg2]
+            else:
                 print(f"shl r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.regs[self.reg1] >> self.reg2
-            else:
-                print(f"shl r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.regs[self.reg1] >> self.regs[self.reg2]
         elif (instrNum == 9):
             if(self.imm):
+                print(f"seq r{self.reg1} r{self.reg2} r{self.reg3}")
+                if (self.regs[self.reg1] == self.regs[self.reg2]):
+                    self.regs[self.reg3] = 1
+                else:
+                    self.regs[self.reg3] = 0
+            else:
                 print(f"seq r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
@@ -123,23 +129,16 @@ class Virtual_Machine:
                     self.regs[self.reg3] = 1
                 else:
                     self.regs[self.reg3] = 0
-            else:
-                print(f"seq r{self.reg1} r{self.reg2} r{self.reg3}")
-                if (self.reg2 < 0):
-                    self.reg2 = self.reg2 & (2**16) -1
-                if (self.regs[self.reg1] == self.regs[self.reg2]):
-                    self.regs[self.reg3] = 1
-                else:
-                    self.regs[self.reg3] = 0
         elif (instrNum == 10):
             if(self.imm):
+                print(f"load r{self.reg1} r{self.reg2} r{self.reg3}")
+                
+                self.regs[self.reg3] = self.memory[self.regs[self.reg1] + self.regs[self.reg2]]
+            else:
                 print(f"load r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 self.regs[self.reg3] = self.memory[self.regs[self.reg1] + self.reg2]
-            else:
-                print(f"load r{self.reg1} {self.reg2} r{self.reg3}")
-                self.regs[self.reg3] = self.memory[self.regs[self.reg1] + self.regs[self.reg2]]
 
 
     def showRegs(self):

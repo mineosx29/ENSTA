@@ -71,9 +71,9 @@ for i in data:
     if "jmp" in splitage_tableau[0]: # Si le premier instruction est jmp
         inst = "jmp"
         if "jmpr" in splitage_tableau[0]:
-            imm = 1
-        else:
             imm = 0
+        else:
+            imm = 1
     else:
     # if splitage_tableau[0] != "jmp":
         inst = splitage_tableau[0].rsplit("r", 1)[0]
@@ -99,13 +99,13 @@ for i in data:
     elif inst == "jmp":
         if "r" in splitage_tableau[0].split("p")[1]:
             part_nombre_reg.append(int(splitage_tableau[0].split("p")[1][1:]))
-            imm = 1
+            imm = 0
         else:
             nombre_registre = int(splitage_tableau[0].split("p")[1])
             if nombre_registre < 0:
                 nombre_registre = nombre_registre & (2**16)-1
             part_nombre_reg.append(nombre_registre)
-            imm = 0
+            imm = 1
         part_nombre_reg.append(int(splitage_tableau[1][1:]))
 
         instr += dictionnaire_inst.get(inst) << 27
@@ -135,13 +135,13 @@ for i in data:
         if "r" in register[1]:
             print(register[1])
             part_nombre_reg.append(int(register[1][1:]))
-            imm = 1
+            imm = 0
         else:
             nombre_registre_e = int(register[1])
             if nombre_registre_e < 0:
                 nombre_registre_e = nombre_registre_e & (2**16)-1
             part_nombre_reg.append(nombre_registre_e)
-            imm = 0
+            imm = 1
         part_nombre_reg.append(int(register[2][1:]))
         
         # if register[1] != "r":
