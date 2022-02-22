@@ -186,8 +186,8 @@ for i in data:
 
 
     elif  "scall" in inst:
-        n = int(inst[5:])
-        instr += dictionnaire_inst.get(inst[:5]) << 27
+        n = int(inst[5:]) # On prend tout ce qui est après scall
+        instr += dictionnaire_inst.get(inst[:5]) << 27 # On recherche l'instruction dans le dictionnaire
         instr += n
 
 
