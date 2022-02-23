@@ -228,8 +228,8 @@ for i in data:
 
 fichier_a_decoder = open(sys.argv[2], "a")
 for m in donne_sortie:
-    fichier_a_decoder.write(hex(m))
-    fichier_a_decoder.write("\n")
+    fichier_a_decoder.write(hex(m) + "\n")
+    #fichier_a_decoder.write("\n")
     addresse = addresse + 1
 fichier_a_decoder.close()
 

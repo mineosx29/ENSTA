@@ -20,6 +20,7 @@ class Virtual_Machine:
         return instruction
 
     def decode(self, instr):
+        print(instr)
         instrNum = (instr &  0xF8000000) >> 27
         if instrNum == 15:
             self.imm = (instr & 0x4000000) >> 26
@@ -78,12 +79,12 @@ class Virtual_Machine:
                     pass
             else:
                 print(f"div r{self.reg1} r{self.reg2} r{self.reg3}")
-               
+
                 try:
                     self.regs[self.reg3] = self.regs[self.reg1] / self.regs[self.reg2]
                 except ZeroDivisionError:
                     pass
-                        
+
         elif (instrNum == 5):
             if(self.imm):
                 print(f"and r{self.reg1} {self.reg2} r{self.reg3}")
@@ -138,7 +139,7 @@ class Virtual_Machine:
                     self.regs[self.reg3] = 1
                 else:
                     self.regs[self.reg3] = 0
-           
+
             else:
                 print(f"slt r{self.reg1} r{self.reg2} r{self.reg3}")
                 if (self.regs[self.reg1] < self.regs[self.reg2]):
@@ -178,7 +179,7 @@ class Virtual_Machine:
             else:
                 print(f"store r{self.reg1} r{self.reg2} r{self.reg3}")
                 self.memory[self.regs[self.reg1] + self.regs[self.reg2]] = self.regs[self.reg3]
-                
+
         elif (instrNum == 15):
                 if (self.imm):
                     print(f"jmp" + "r" + str(self.reg1) + ", r" + str(self.reg2))
@@ -196,18 +197,18 @@ class Virtual_Machine:
                     self.p_counter = self.reg2 -1
                 else:
                     pass
-        
-
-                
 
 
-                
+
+
+
+
 
     def showRegs(self):
         res = "regs = "
         for i in range(len(self.regs)):
            print(" " ,self.regs[i])
-        
+
 
     def run(self, prog, show_regs=True):
         self.prog = prog
@@ -222,11 +223,20 @@ class Virtual_Machine:
 
 if __name__ == "__main__":
 
-    prog = [0x8200021, 0x7c0001c5]
+    prog = []
     fichier_a_lire = open(sys.argv[1], "r")
     data1 = fichier_a_lire.readlines()
-    
-            
+    for p in data1:
+        p = p.replace("\n","")
+        p = p.replace("0x","")
+        a = int(p,16)
+
+
+        prog.append((a))
+
+
+
+
 
     print(prog)
     vm = Virtual_Machine(nombre_registre=32)
