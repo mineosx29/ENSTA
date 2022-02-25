@@ -7,6 +7,8 @@ class Assembly:
              "sle","seq","load","store","jmp","braz","branz","scall","stop"]
 
     dictionnaire_inst={}
+    instruction = "[A-Z]{3}"
+    reg = "[0-9]"
 
     fichier_asm = open(sys.argv[1], "r")
     data = fichier_asm.readlines()
@@ -16,4 +18,6 @@ class Assembly:
 
 
     for d in data:
-        
+        liste = d.split(",")
+        regex_inst = re.compile(instruction)
+        registre = re.compile(reg)

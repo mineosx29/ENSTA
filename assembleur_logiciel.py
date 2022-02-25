@@ -25,17 +25,19 @@ print(len(dictionnaire_inst))
 
 
 
+
 for i in data:
     tableau = []
     part_nombre_reg = []
     register = []
+    tab = []
     
     
 
 
     for p in i:
         try:
-            if p == "#":
+            if p == "#" or p == ";":
                 break
             if p == " ":
                 continue
@@ -55,16 +57,25 @@ for i in data:
     else:
         if '' != tableau_virgule:
             br = br + 1
+        else:
+            pass
 
     if ":" in tableau_virgule:
         index = tableau_virgule.rfind(":")
-        dictionnaire_de_labels[tableau_virgule[(index+1):]] = br
-      
+        tableau_virgule = tableau_virgule[(index+1):]
+        if '' != tableau_virgule:
+            tab.append(tableau_virgule)
+    elif '' == tableau_virgule:
+        continue
+    else:
+        tab.append(tableau_virgule)
+
+    
 
 
     if tableau_virgule == '':
         continue
-
+    print(dictionnaire_de_labels)
     print(tableau_virgule)
 
     splitage_tableau = tableau_virgule.split(",") # On sépare en fonction des virgules
@@ -74,6 +85,15 @@ for i in data:
             imm = 0
         else:
             imm = 1
+        for key in dictionnaire_de_labels:
+            if key in splitage_tableau[0]:
+                imm = 0
+                print("Label Trouvé")
+                print(key)
+                break
+            else:
+                imm = 1
+                print("Pas de label trouvé")
     else:
     # if splitage_tableau[0] != "jmp":
         inst = splitage_tableau[0].rsplit("r", 1)[0]
@@ -106,6 +126,7 @@ for i in data:
                 nombre_registre = nombre_registre & (2**16)-1
             part_nombre_reg.append(nombre_registre)
             imm = 1
+        
         part_nombre_reg.append(int(splitage_tableau[1][1:]))
 
         instr += dictionnaire_inst.get(inst) << 27

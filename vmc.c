@@ -88,7 +88,7 @@ void eval()
         printf( "add r%d,%d,r%d\n",reg1, reg2, reg3 );
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = (reg2 & 0xFFFF);
         }
         regs[ reg3 ] = regs[ reg1 ] +  reg2 ;
       }
@@ -105,7 +105,7 @@ void eval()
         printf( "sub r%d,%d,r%d\n", reg1, reg2, reg3 );
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1;
+          reg2 = reg2 & 0xFFFF;
         }
         regs[ reg3 ] = regs[ reg1 ] -  reg2 ;
       }
@@ -121,7 +121,7 @@ void eval()
         printf("mul r%d,%d,r%d\n", reg1, reg2, reg3);
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1;        
+          reg2 = reg2 & 0xFFFF;        
         }
         regs[ reg3] = regs[reg1] * reg2;
       }
@@ -142,7 +142,7 @@ void eval()
         printf("div r%d, %d,r%d\n", reg1, reg2, reg3);
          if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = reg2 & 0xFFFF; 
         }
         else if (reg2 == 0)
         {
@@ -162,7 +162,7 @@ void eval()
         printf("and r%d, %d, r%d\n", reg1, reg2, reg3);
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = reg2 & 0xFFFF; 
         }
         regs[reg3] = regs[reg1] & reg2;
       }
@@ -179,7 +179,7 @@ void eval()
         printf("or r%d, %d,r%d\n", reg1, reg2, reg3);
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = reg2 & 0xFFFF; 
         }
         regs[reg3] = regs[reg1] || reg2;
       }
@@ -196,7 +196,7 @@ void eval()
         printf("xor r%d, %d, r%d\n", reg1, reg2, reg3);
          if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = reg2 & 0xFFFF; 
         }
         regs[reg3] = regs[reg1] ^ reg2;
       }
@@ -210,12 +210,12 @@ void eval()
       }
       else
       {
-        printf("shl r%d, r%d, r%d\n", reg1, reg2, reg3);
+        printf("shl r%d, %d, r%d\n", reg1, reg2, reg3);
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+          reg2 = reg2 & 0xFFFF;
         }
-        regs[reg3] = regs[reg1] >> regs[reg2];
+        regs[reg3] = regs[reg1] >> reg2;
       }
       break;
     case 9:
@@ -224,7 +224,7 @@ void eval()
         printf("seq r%d, %d, r%d\n", reg1, reg2, reg3);
         if (reg2 < 0)
         {
-          reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+           reg2 = reg2 & 0xFFFF;
         }
         if(regs[reg1] == reg2)
         {
@@ -257,7 +257,7 @@ void eval()
           printf("load r%d, r%d, r%d\n", reg1, reg2, reg3);
           if (reg2 < 0)
           {
-            reg2 = reg2 & (int) (pow(2, 16)) - 1; 
+            reg2 = reg2 & 0xFFFF; 
           }
           regs[reg3] = memory[regs[reg1] + regs[reg2]];
         }

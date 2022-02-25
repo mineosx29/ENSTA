@@ -1,15 +1,15 @@
 # Fichier python permettant de assembler.
 import re
-fichier = open("fichier.txt")
+import sys
+fichier = open(sys.argv[1], "r")
 donnee = fichier.readlines()
 instruction = "[A-Z]{3}"
 reg = "[0-9]"
 
 
 
-
-for i in donnee:
     liste = i.split(",")
+    print(liste)
 
     dico = {}
     dico["ADD"] = 1
@@ -22,7 +22,7 @@ for i in donnee:
     print(instruction2)
     print(registre)
 
-    if "R" in liste[1]:
+    if "r" in liste[1]:
         reg2 = 1
     else:
         reg2 = 0
