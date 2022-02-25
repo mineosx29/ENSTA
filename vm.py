@@ -11,7 +11,7 @@ class Virtual_Machine:
         self.reg2 = None
         self.reg3 = None
         self.imm = None
-        self.memory = zeros(1024, int)
+        self.memory = zeros(40, int)
         self.running = False
 
     def fetch(self):
@@ -52,13 +52,17 @@ class Virtual_Machine:
                 self.regs[self.reg3] = self.regs[self.reg1] + self.regs[self.reg2]
         elif (instrNum == 2):
             if(self.imm):
-                if (self.reg2 < 0):
-                    self.reg2 = self.reg2 & (2**16) -1
-                print(f"sub r{self.reg1} {self.reg2} r{self.reg3}")
                 self.regs[self.reg3] = self.regs[self.reg1] - self.reg2
+                if (self.regs[self.reg3] < 0):
+                    self.regs[self.reg3] = self.regs[self.reg3] & (2**16) -1
+                print(f"sub r{self.reg1} {self.reg2} r{self.reg3}")
+
             else:
-                print(f"sub r{self.reg1} r{self.reg2} r{self.reg3}")
                 self.regs[self.reg3] = self.regs[self.reg1] - self.regs[self.reg2]
+                if (self.regs[self.reg3] < 0):
+                    self.regs[self.reg3] = self.regs[self.reg3] & (2**16) -1
+                print(f"sub r{self.reg1} r{self.reg2} r{self.reg3}")
+
         elif (instrNum == 3):
             if(self.imm):
                 print(f"mul r{self.reg1} {self.reg2} r{self.reg3}")
@@ -87,9 +91,8 @@ class Virtual_Machine:
 
         elif (instrNum == 5):
             if(self.imm):
-                print(f"and r{self.reg1} {self.reg2} r{self.reg3}")
-                if (self.reg2 < 0):
-                    self.reg2 = self.reg2 & (2**16) -1
+                print(f"and r{self.reg1} {((self.reg2) & 0xFFFF)} r{self.reg3}")
+
                 self.regs[self.reg3] = self.regs[self.reg1] & self.reg2
             else:
                 print(f"and r{self.reg1} r{self.reg2} r{self.reg3}")
@@ -192,9 +195,15 @@ class Virtual_Machine:
                     self.regs[self.reg2] = self.p_counter + 1
                     self.p_counter = self.regs[self.reg1] - 1
         elif (instrNum == 16):
-                print(f"braz  r{self.reg1}" + str(hex(self.reg2)))
+                print(f"braz  r{self.reg1}" +" " + str(hex(self.reg2)))
                 if self.regs[self.reg1] == 0:
-                    self.p_counter = self.reg2 -1
+                    self.p_counter  = self.reg2 -1
+                else:
+                    pass
+        elif (instrNum == 17):
+                print(f"branz  r{self.reg1}" +" " + str(hex(self.reg2)))
+                if self.regs[self.reg1] != 0:
+                    self.p_counter  = self.reg2 -1
                 else:
                     pass
 
@@ -207,7 +216,12 @@ class Virtual_Machine:
     def showRegs(self):
         res = "regs = "
         for i in range(len(self.regs)):
-           print(" " ,self.regs[i])
+           print(" " ,self.regs)
+
+    def ShowMemory(self):
+        print("\n")
+        print(self.memory)
+
 
 
     def run(self, prog, show_regs=True):
@@ -219,6 +233,7 @@ class Virtual_Machine:
             self.codage_inst(instrNum)
             if show_regs:
                 self.showRegs()
+                self.ShowMemory()
         self.prog = None
 
 if __name__ == "__main__":
