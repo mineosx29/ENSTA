@@ -206,6 +206,14 @@ class Virtual_Machine:
                     self.p_counter  = self.reg2 -1
                 else:
                     pass
+        elif (instrNum == 18):
+                print(f"scall {self.reg1}")
+                if self.reg1 == 0:
+                    a = int(input("Veuillez entrer une valeur dans r1"))
+                    self.reg1 = a
+                else:
+                    print(f"scall r{self.reg1}")
+
 
 
 
