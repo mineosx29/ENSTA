@@ -208,11 +208,11 @@ class Virtual_Machine:
                     pass
         elif (instrNum == 18):
                 print(f"scall {self.reg1}")
-                if self.reg1 == 0:
+                if self.reg1 == 0: # scall 0
                     a = int(input("Veuillez entrer une valeur dans r1"))
                     self.regs[1] = a
                 else:
-                    print(f"scall r{self.regs[1]}")
+                    print(f"scall r{self.regs[1]}") #scall 1
 
 
 
