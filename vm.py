@@ -210,9 +210,9 @@ class Virtual_Machine:
                 print(f"scall {self.reg1}")
                 if self.reg1 == 0:
                     a = int(input("Veuillez entrer une valeur dans r1"))
-                    self.reg1 = a
+                    self.regs[1] = a
                 else:
-                    print(f"scall r{self.reg1}")
+                    print(f"scall r{self.regs[1]}")
 
 
 
