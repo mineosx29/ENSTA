@@ -1,5 +1,5 @@
-
-        add r0,7,r1
+        scall 0
+        add r1,7,r1
         sub r0,5,r3
         slt r0,r1,r2
         braz r2,label
