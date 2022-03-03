@@ -68,9 +68,12 @@ def reperage_label(file):
 
     return dico_lab
 
-
+print("Répérage des labels en cours...\n")
 dictionnaire_de_labels =  reperage_label(data)
+print("Fin du répérage des labels ! \n")
 print(dictionnaire_de_labels)
+
+print("Début du processus de tranformation en binaire....\n")
 
 for i in data:
     tableau = []
@@ -224,8 +227,9 @@ for i in data:
     #print(splitage_tableau)
 
     donne_sortie.append(instr)
+print("Fin du processus ! \n")
 
-
+print("Début du processus d'écriture du binaire dans le fichier...\n")
 fichier_a_decoder = open(sys.argv[2], "a")
 for m in donne_sortie:
     fichier_a_decoder.write(hex(m) + "\n")
@@ -233,9 +237,10 @@ for m in donne_sortie:
     addresse = addresse + 1
 fichier_a_decoder.close()
 
+print("Fin du processus ! \n")
 
 
 
-print(tableau)
+
 
 #fichier_a_decoder.write("0x%08x" % addresse + " " + hex(m))
