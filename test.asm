@@ -1,3 +1,10 @@
+    seq r1,1,r2
+    branz r2, label2
+    seq r1,2,r2
+    branz r2, label1
+    seq r1,3,r2
+    branz r2, while
+
 label1:
     add r3,20,r4
 label2:
@@ -6,16 +13,9 @@ label3:
     add r3,100,r4
 Else:
     add r3,0,r4
-end: stop
-
-label4:
-    seq r1,1,r2
-    branz r2,label1
-    seq r1,2,r2
-    branz r2, label2
-    seq r1,3,r2
-    branz r2, label3
-    jmp r2, r0
+end: 
+    stop
+    
 
 ;=========================================
 

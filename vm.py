@@ -149,6 +149,23 @@ class Virtual_Machine:
                     self.regs[self.reg3] = 1
                 else:
                     self.regs[self.reg3] = 0
+        elif (instrNum == 11):
+            if(self.imm):
+                print(f"sle r{self.reg1} {self.reg2} r{self.reg3}")
+                if (self.reg2 < 0):
+                    self.reg2 = self.reg2 & (2**16) -1
+                if (self.regs[self.reg1] <= self.reg2):
+                    self.regs[self.reg3] = 1
+                else:
+                    self.regs[self.reg3] = 0
+            else:
+                print(f"sle r{self.reg1} r{self.reg2} r{self.reg3}")
+                if (self.regs[self.reg1] <= self.regs[self.reg2]):
+                    self.regs[self.reg3] = 1
+                else:
+                    self.regs[self.reg3] = 0
+
+
         elif (instrNum == 12):
             if(self.imm):
                 print(f"seq r{self.reg1} {self.reg2} r{self.reg3}")
@@ -185,25 +202,27 @@ class Virtual_Machine:
 
         elif (instrNum == 15):
                 if (self.imm):
-                    print(f"jmp" + "r" + str(self.reg1) + ", r" + str(self.reg2))
+                    print(f"jmp " + str(self.reg1) + ", r" + str(self.reg2))
                     if(self.reg1 < 0):
                         self.reg1 = self.reg1 & (2**16) -1
                     self.regs[self.reg2] = self.p_counter + 1
-                    self.p_counter = self.reg1 - 1
+                    self.p_counter = self.reg1 
                 else:
                     print(f"jmp" + "r" + str(self.reg1) + ", r" + str(self.reg2))
                     self.regs[self.reg2] = self.p_counter + 1
-                    self.p_counter = self.regs[self.reg1] - 1
+                    self.p_counter = self.regs[self.reg1] 
         elif (instrNum == 16):
                 print(f"braz  r{self.reg1}" +" " + str(hex(self.reg2)))
+                if (self.reg2 < 0):
+                    self.reg2 = self.reg2 & (2**16) -1
                 if self.regs[self.reg1] == 0:
-                    self.p_counter  = self.reg2 -1
+                    self.p_counter  = self.regs[self.reg2] - 2
                 else:
                     pass
         elif (instrNum == 17):
                 print(f"branz  r{self.reg1}" +" " + str(hex(self.reg2)))
                 if self.regs[self.reg1] != 0:
-                    self.p_counter  = self.reg2 -1
+                    self.p_counter  = self.regs[self.reg2] - 2
                 else:
                     pass
         elif (instrNum == 18):

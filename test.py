@@ -48,7 +48,7 @@ def reperage_label(file):
 
         if ':' in tableau_virgule:
             index = tableau_virgule.rfind(":")
-            dico_lab[tableau_virgule[:index]] = br
+            dico_lab[tableau_virgule[:index]] = br 
         else:
             if '' != tableau_virgule:
                 br = br + 1
@@ -134,11 +134,11 @@ for i in data:
         #print(inst)
 
     if ":" in tableau_virgule:
-        dictionnaire_de_labels[splitage_tableau[0][:-1]] = br
+        # dictionnaire_de_labels[splitage_tableau[0][:-1]] = br
         continue
 
-    else:
-        br += 1
+    # else:
+    #     br += 1
 
     instr = 0
 
@@ -163,12 +163,14 @@ for i in data:
         if imm == 0:
             try:
                part_nombre_reg.append(int(splitage_tableau[0].split("p")[1][1:]))
+               print(part_nombre_reg)
             except ValueError:
                 part_nombre_reg.append(int(splitage_tableau[0].split("p")[1]) & (2**16 - 1))
+                print(part_nombre_reg)
                 imm = 1
         else:
             label = splitage_tableau[0][3:]
-            #print(label)
+            print(label)
             part_nombre_reg.append(dictionnaire_de_labels.get(label))
 
 
