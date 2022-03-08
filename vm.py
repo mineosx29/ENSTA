@@ -4,7 +4,7 @@ import argparse
 from numpy import zeros,array
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-b", "--bin", type=str)
+parser.add_argument("-b", "--bin", type=str, required=True)
 args = parser.parse_args()
 
 
