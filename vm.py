@@ -1,6 +1,12 @@
 
 import sys
+import argparse
 from numpy import zeros,array
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-b", "--bin", type=str)
+args = parser.parse_args()
+
 
 class Virtual_Machine:
     def __init__(self, nombre_registre = 32):
@@ -216,13 +222,13 @@ class Virtual_Machine:
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
                 if self.regs[self.reg1] == 0:
-                    self.p_counter  = self.regs[self.reg2] - 2
+                    self.p_counter  = self.regs[self.reg2]  - 1
                 else:
                     pass
         elif (instrNum == 17):
                 print(f"branz  r{self.reg1}" +" " + str(hex(self.reg2)))
                 if self.regs[self.reg1] != 0:
-                    self.p_counter  = self.regs[self.reg2] - 2
+                    self.p_counter  = self.regs[self.reg2] - 1
                 else:
                     pass
         elif (instrNum == 18):
@@ -263,10 +269,11 @@ class Virtual_Machine:
                 self.ShowMemory()
         self.prog = None
 
+
 if __name__ == "__main__":
 
     prog = []
-    fichier_a_lire = open(sys.argv[1], "r")
+    fichier_a_lire = open(args.bin, "r")
     data1 = fichier_a_lire.readlines()
     for p in data1:
         p = p.replace("\n","")
@@ -277,7 +284,9 @@ if __name__ == "__main__":
         prog.append((a))
 
 
-
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("-b", action=sys.argv[1])
+    # args = parser.parse_args
 
 
     print(prog)
