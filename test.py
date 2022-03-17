@@ -1,8 +1,15 @@
 from audioop import add
 import re
 import sys
+import argparse
 
-fichier_asm = open(sys.argv[1], "r")
+parser = argparse.ArgumentParser()
+parser.add_argument("-a", "--asm", type=str, required=True)
+parser.add_argument("-b", "--bin", type=str, required=True)
+
+args = parser.parse_args()
+
+fichier_asm = open(args.asm, "r")
 data = fichier_asm.readlines()
 br = 0
 addresse = 0
@@ -16,6 +23,8 @@ dictionnaire_inst = {}
 donne_sortie = []
 dictionnaire_de_labels = {}
 dico_2 = {}
+
+
 
 
 
@@ -98,9 +107,7 @@ for i in data:
 
     tableau_virgule = "".join(tableau)
 
-
-
-
+  
 
 
 
@@ -232,7 +239,7 @@ for i in data:
 print("Fin du processus ! \n")
 
 print("Début du processus d'écriture du binaire dans le fichier...\n")
-fichier_a_decoder = open(sys.argv[2], "a")
+fichier_a_decoder = open(args.bin, "a")
 for m in donne_sortie:
     fichier_a_decoder.write(hex(m) + "\n")
     #fichier_a_decoder.write("\n")

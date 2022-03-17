@@ -5,6 +5,7 @@ from numpy import zeros,array
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--bin", type=str, required=True)
+#arser.add_argument("-d", "--don", type=str, required=True)
 args = parser.parse_args()
 
 
@@ -19,6 +20,7 @@ class Virtual_Machine:
         self.imm = None
         self.memory = zeros(40, int)
         self.running = False
+        self.cycle = 0
 
     def fetch(self):
         instruction = self.prog[self.p_counter]
@@ -45,6 +47,7 @@ class Virtual_Machine:
         return instrNum
 
     def codage_inst(self, instrNum):
+        self.cycle +=1
         if (instrNum == 0):
             self.running = False
         elif (instrNum == 1):
@@ -70,6 +73,7 @@ class Virtual_Machine:
                 print(f"sub r{self.reg1} r{self.reg2} r{self.reg3}")
 
         elif (instrNum == 3):
+            self.cycle +=1
             if(self.imm):
                 print(f"mul r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
@@ -79,6 +83,7 @@ class Virtual_Machine:
                 print(f"mul r{self.reg1} r{self.reg2} r{self.reg3}")
                 self.regs[self.reg3] = self.regs[self.reg1] * self.regs[self.reg2]
         elif (instrNum == 4):
+            self.cycle +=1
             if(self.imm):
                 print(f"div r{self.reg1} {self.reg2} r{self.reg3}")
                 if (self.reg2 < 0):
@@ -207,6 +212,7 @@ class Virtual_Machine:
                 self.memory[self.regs[self.reg1] + self.regs[self.reg2]] = self.regs[self.reg3]
 
         elif (instrNum == 15):
+                self.cycle +=1
                 if (self.imm):
                     print(f"jmp " + str(self.reg1) + ", r" + str(self.reg2))
                     if(self.reg1 < 0):
@@ -218,6 +224,7 @@ class Virtual_Machine:
                     self.regs[self.reg2] = self.p_counter + 1
                     self.p_counter = self.regs[self.reg1] 
         elif (instrNum == 16):
+                self.cycle +=1
                 print(f"braz  r{self.reg1}" +" " + str(hex(self.reg2)))
                 if (self.reg2 < 0):
                     self.reg2 = self.reg2 & (2**16) -1
@@ -226,6 +233,7 @@ class Virtual_Machine:
                 else:
                     pass
         elif (instrNum == 17):
+                self.cycle +=1
                 print(f"branz  r{self.reg1}" +" " + str(hex(self.reg2)))
                 if self.regs[self.reg1] != 0:
                     self.p_counter  = self.regs[self.reg2] - 1
@@ -268,6 +276,7 @@ class Virtual_Machine:
                 self.showRegs()
                 self.ShowMemory()
         self.prog = None
+        print("Nombre de cycle : ", self.cycle)
 
 
 if __name__ == "__main__":
