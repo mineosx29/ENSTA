@@ -5,7 +5,7 @@ from numpy import zeros,array
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--bin", type=str, required=True)
-#arser.add_argument("-d", "--don", type=str, required=True)
+#parser.add_argument("-d", "--don", type=str, required=True)
 args = parser.parse_args()
 
 
