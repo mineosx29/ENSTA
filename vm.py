@@ -5,7 +5,7 @@ from numpy import zeros,array
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--bin", type=str, required=True)
-#arser.add_argument("-d", "--don", type=str, required=True)
+parser.add_argument("-d", "--don", type=str, required=True)
 args = parser.parse_args()
 
 
@@ -97,13 +97,12 @@ class Virtual_Machine:
 
                 try:
                     self.regs[self.reg3] = self.regs[self.reg1] / self.regs[self.reg2]
-                except ZeroDivisionError:
+                except ZeroDivisionError: # Si division par zéro
                     pass
 
         elif (instrNum == 5):
             if(self.imm):
                 print(f"and r{self.reg1} {((self.reg2) & 0xFFFF)} r{self.reg3}")
-
                 self.regs[self.reg3] = self.regs[self.reg1] & self.reg2
             else:
                 print(f"and r{self.reg1} r{self.reg2} r{self.reg3}")
@@ -248,12 +247,6 @@ class Virtual_Machine:
                     print(f"scall r{self.regs[1]}") #scall 1
 
 
-
-
-
-
-
-
     def showRegs(self):
         res = "regs = "
         for i in range(len(self.regs)):
@@ -262,6 +255,10 @@ class Virtual_Machine:
     def ShowMemory(self):
         print("\n")
         print(self.memory)
+        file_data = open(args.don, "a")
+        for i in self.memory:
+            file_data.write(str(i) + "\n")
+        file_data.close()
 
 
 

@@ -211,7 +211,6 @@ for i in data:
         register.append(splitage_tableau[2][:2]) # registre de droite
         part_nombre_reg.append(int(register[0][1:]))
         if "r" in register[1]:
-            #print(register[1])
             part_nombre_reg.append(int(register[1][1:]))
             imm = 0
         else:
@@ -233,7 +232,7 @@ for i in data:
         instr += int(part_nombre_reg[1]) << 5
         instr += int(part_nombre_reg[2])
 
-    #print(splitage_tableau)
+    
 
     donne_sortie.append(instr)
 print("Fin du processus ! \n")
@@ -242,7 +241,6 @@ print("Début du processus d'écriture du binaire dans le fichier...\n")
 fichier_a_decoder = open(args.bin, "a")
 for m in donne_sortie:
     fichier_a_decoder.write(hex(m) + "\n")
-    #fichier_a_decoder.write("\n")
     addresse = addresse + 1
 fichier_a_decoder.close()
 
