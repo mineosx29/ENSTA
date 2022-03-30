@@ -257,7 +257,7 @@ class Virtual_Machine:
         print(self.memory)
         file_data = open(args.don, "a")
         for i in self.memory:
-            file_data.write(str(i) + "\n")
+            file_data.write(str(i) + " ")
         file_data.close()
 
 
