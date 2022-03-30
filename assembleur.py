@@ -84,6 +84,8 @@ print(dictionnaire_de_labels)
 
 print("Début du processus de tranformation en binaire....\n")
 
+
+
 for i in data:
     tableau = []
     part_nombre_reg = []
